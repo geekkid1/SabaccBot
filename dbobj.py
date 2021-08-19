@@ -23,7 +23,19 @@ class servers:
   SET prefix = ?
   WHERE id = ?'''
   fields = ("id","prefix")
-  table_name="servers"
+  table_name = "servers"
+
+class accounts:
+  sql_create='''CREATE TABLE IF NOT EXISTS accounts (
+  id integer PRIMARY KEY,
+  value integer);'''
+  sql_insert='''INSERT INTO accounts(id,value)
+  VALUES(?,?)'''
+  sql_update='''UPDATE accounts
+  SET value = ?
+  WHERE id = ?'''
+  fields = ("id","value")
+  table_name = "accounts"
 
 # Add your other things here with the same data structure to make them work with the built-in
 # database system in util_classes.py
