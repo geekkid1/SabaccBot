@@ -104,6 +104,7 @@ async def on_command_error(ctx,error):
 # project. See the other files in the folder for more details
 bot.add_cog(command_basics.general(bot))
 bot.add_cog(debug_cog.debug(bot))
+bot.add_cog(sabacc_cog.sabacc(bot))
 
 infoformatter = logging.Formatter('%(asctime)s %(levelname)s %(module)s - %(message)s','%Y-%m-%d %H:%M')
 debugformatter = logging.Formatter('%(asctime)s %(levelname)s %(module)s - %(message)s','%Y-%m-%d %H:%M:%S')
