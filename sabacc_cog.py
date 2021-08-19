@@ -33,11 +33,15 @@ class sabacc(commands.Cog):
     self.games[ctx.channel.id] = {}
     self.games[ctx.channel.id]["players"] = []
     self.games[ctx.channel.id]["players"].add(ctx.author.id)
+    self.games[ctx.channel.id]["host"] = ctx.author.id
+    self.games[ctx.channel.id]["status"] = "Preparing"
+    self.games[ctx.channel.id]["hands"] = {}
+    self.games[ctx.channel.id]["hands"][ctx.author.id] = []
     self.games[ctx.channel.id]["deck"] = Deck()
     msg = await ctx.send("Game setup complete! Now up to five more people can join using the `join-game` command! (1/6 Players Joined)")
     self.games[ctx.channel.id]["msg"] = msg.id
 
-  @commands.command(name="join-game",help="Join a game that is about to be started. Must be run in a channel where a game is being setup.")
+  @commands.command(name="join-game",help="Join a game that is setup and about to be started. Must be run in a channel where a game is being setup.")
   async def game_join(self,ctx):
     try:
       if self.games[ctx.channel.id] != {}:
@@ -49,6 +53,7 @@ class sabacc(commands.Cog):
           await ctx.send("Sorry, this game is full at the moment.",delete_after=5)
           return
         self.games[ctx.channel.id]["players"].add(ctx.author.id)
+        self.games[ctx.channel.id]["hands"][ctx.author.id] = []
         await ctx.send("You were successfully added to the game!",delete_after=5)
         msg = await ctx.channel.fetch_message(self.games[ctx.channel.id]["msg"])
         await msg.edit("Game setup complete! Now up to five more people can join using the `join-game` command! ({0}/6 Players Joined)".format(len(self.games[ctx.channel.id]["players"])))
@@ -57,11 +62,35 @@ class sabacc(commands.Cog):
     except:
       await ctx.send("There is no game available to join in this channel!",delete_after=5)
 
+  @commands.command(name="start-game",help="Start a game that you started setting up.")
+  async def game_start(self,ctx):
+    try:
+      if self.games[ctx.channel.id]["host"] != ctx.author.id:
+        await ctx.send("You are not the host of this game. If the game is ready to start, ask them to get things started.",delete_after=5)
+        return
+      if len(self.games[ctx.channel.id]["players"]) <= 1:
+        await ctx.send("There are not enough players to start a game! Get more people to join and then we can get started.",delete_after=5)
+        return
+    except:
+      await ctx.send("Could not find stored game host to verify game.",delete_after=5)
+
 
 class Card():
   def __init__(self,name,value):
     self.name = name
     self.value = value
+
+  def __eq__(self,other):
+    return other.value == self.value
+
+  def __ne__(self,other):
+    return other.value != self.value
+
+  def __add__(self,other):
+    try:
+      return other.value + self.value
+    except:
+      return other + self.value
 
 class Deck():
   def __init__(self):
