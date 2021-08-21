@@ -79,6 +79,7 @@ bot.remove_command('help')
 # -iscord client and is therefore online and ready to use.
 @bot.event
 async def on_ready():
+  database.repair_table(dbobj.servers)
   logger.info("Ready!")
   print("Ready!")
 
