@@ -159,6 +159,10 @@ def db_open():
     conn.close
 
 class database:
+  def drop_table(table):
+    with db_open() as conn:
+      c = conn.cursor()
+      c.execute(table.sql_drop)
   def repair_table(table):
     with db_open() as conn:
       c = conn.cursor()

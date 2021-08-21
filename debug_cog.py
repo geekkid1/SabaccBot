@@ -16,3 +16,9 @@ class debug(commands.Cog):
   async def db_repair(self,ctx):
     database.repair_table(dbobj.servers)
     database.repair_table(dbobj.accounts)
+
+  @commands.is_owner()
+  @commands.command(name="drop-tables",help="Drop all database tables so they can be regenned using 'repair-database'.")
+  async def db_drop(self,ctx):
+    database.drop_table(dbobj.servers)
+    database.drop_table(dbobj.accounts)

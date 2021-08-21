@@ -17,6 +17,7 @@ class servers:
   sql_create='''CREATE TABLE IF NOT EXISTS servers (
   id bigint PRIMARY KEY,
   prefix text);'''
+  sql_drop='''DROP TABLE servers;'''
   sql_insert='''INSERT INTO servers(id,prefix)
   VALUES(%s,%s)'''
   sql_update='''UPDATE servers
@@ -29,6 +30,7 @@ class accounts:
   sql_create='''CREATE TABLE IF NOT EXISTS accounts (
   id bigint PRIMARY KEY,
   value integer);'''
+  sql_drop='''DROP TABLE accounts;'''
   sql_insert='''INSERT INTO accounts(id,value)
   VALUES(%s,%s)'''
   sql_update='''UPDATE accounts
