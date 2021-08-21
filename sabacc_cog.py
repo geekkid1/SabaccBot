@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands,menus
-from referral_cog import Confirm
 import dbobj,os
 from util_classes import database
 import random
