@@ -110,11 +110,11 @@ bot.add_cog(sabacc_cog.sabacc(bot))
 infoformatter = logging.Formatter('%(asctime)s %(levelname)s %(module)s - %(message)s','%Y-%m-%d %H:%M')
 debugformatter = logging.Formatter('%(asctime)s %(levelname)s %(module)s - %(message)s','%Y-%m-%d %H:%M:%S')
 
-debug_log = DiscordLogger(config.log_debug, bot, True)
+debug_log = DiscordLogger(int(config.log_debug), bot, True)
 debug_log.setLevel(logging.DEBUG)
 debug_log.setFormatter(debugformatter)
 
-info_log = DiscordLogger(config.log_info, bot, False)
+info_log = DiscordLogger(int(config.log_info), bot, False)
 info_log.setLevel(logging.INFO)
 info_log.setFormatter(infoformatter)
 
