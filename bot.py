@@ -1,7 +1,7 @@
 import discord,sqlite3,argparse,logging,time,asyncio
 from discord.ext import commands
 from discord.ext.commands import when_mentioned
-import command_basics,dbobj,debug_cog
+import command_basics,dbobj,debug_cog,sabacc_cog
 from util_classes import database
 from config.config_vars import config
 
