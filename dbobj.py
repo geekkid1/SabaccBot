@@ -18,10 +18,10 @@ class servers:
   id integer PRIMARY KEY,
   prefix text);'''
   sql_insert='''INSERT INTO servers(id,prefix)
-  VALUES(?,?)'''
+  VALUES(%s,%s)'''
   sql_update='''UPDATE servers
-  SET prefix = ?
-  WHERE id = ?'''
+  SET prefix = %s
+  WHERE id = %s'''
   fields = ("id","prefix")
   table_name = "servers"
 
@@ -30,10 +30,10 @@ class accounts:
   id integer PRIMARY KEY,
   value integer);'''
   sql_insert='''INSERT INTO accounts(id,value)
-  VALUES(?,?)'''
+  VALUES(%s,%s)'''
   sql_update='''UPDATE accounts
-  SET value = ?
-  WHERE id = ?'''
+  SET value = %s
+  WHERE id = %s'''
   fields = ("id","value")
   table_name = "accounts"
 
