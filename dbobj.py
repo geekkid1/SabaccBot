@@ -15,7 +15,7 @@
 
 class servers:
   sql_create='''CREATE TABLE IF NOT EXISTS servers (
-  id integer PRIMARY KEY,
+  id bigint PRIMARY KEY,
   prefix text);'''
   sql_insert='''INSERT INTO servers(id,prefix)
   VALUES(%s,%s)'''
@@ -27,7 +27,7 @@ class servers:
 
 class accounts:
   sql_create='''CREATE TABLE IF NOT EXISTS accounts (
-  id integer PRIMARY KEY,
+  id bigint PRIMARY KEY,
   value integer);'''
   sql_insert='''INSERT INTO accounts(id,value)
   VALUES(%s,%s)'''
