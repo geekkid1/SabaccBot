@@ -53,6 +53,7 @@ def get_prefix(bot, message):
     test = False
     if v != [] and v != None and test == False:
       templist = [v[0][1]]
+      print(templist)
       templist.extend(when_mentioned(bot,message))
       return templist
     else:
