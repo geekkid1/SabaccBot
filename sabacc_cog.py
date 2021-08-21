@@ -79,6 +79,20 @@ class sabacc(commands.Cog):
       if self.games[ctx.channel.id]["status"] != "Preparing":
         await ctx.send("The game is not able to be started right now. If that means that the game is already running, perhaps go play.",delete_after=5)
       self.games[ctx.channel.id]["status"] = "Building"
+      for p in self.games[ctx.channel.id]["players"]:
+        for x in range(2):
+          self.games[ctx.channel.id]["hands"][p].add(self.games[ctx.channel.id]["deck"].draw())
+        c1 = self.games[ctx.channel.id]["hands"][p][0]
+        c2 = self.games[ctx.channel.id]["hands"][p][1]
+        sum = c1.value + c2.value
+        user = await bot.fetch_user(p)
+        if user.dm_channel == None:
+          ch = await user.create_dm()
+        else:
+          ch = user.dm_channel
+        await ch.send("Your starting hand is {0.name} and {1.name}. The sum of your hand is {2}.".format(c1,c2,sum))
+      first_player = bot.fetch_user(self.games[ctx.channel.id]["players"][0])
+      await ctx.send("The game has begun! All players' starting hands have been sent to them, and it is now " + first_player.mention +"'s turn! You may take a turn using the `action` command!")
     except:
       await ctx.send("Could not verify stored game data.",delete_after=5)
 
