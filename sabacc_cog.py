@@ -38,6 +38,7 @@ class sabacc(commands.Cog):
     self.games[ctx.channel.id]["hands"] = {}
     self.games[ctx.channel.id]["hands"][ctx.author.id] = []
     self.games[ctx.channel.id]["deck"] = Deck()
+    self.games[ctx.channel.id]["turn"] = 0
     msg = await ctx.send("Game setup complete! Now up to five more people can join using the `join-game` command! (1/6 Players Joined)")
     self.games[ctx.channel.id]["msg"] = msg.id
 
@@ -51,6 +52,11 @@ class sabacc(commands.Cog):
           return
         if len(self.games[ctx.channel.id]["players"]) >= 6:
           await ctx.send("Sorry, this game is full at the moment.",delete_after=5)
+          return
+        if self.games[ctx.channel.id]["status"] != "Preparing":
+          await ctx.send("The game is currently not joinable at the moment. Wait for another game in this channel or start a different one in another channel.",delete_after=5)
+        if ctx.author.id in self.games[ctx.channel.id]["players"]:
+          await ctx.send("You have already joined this game.",delete_after=5)
           return
         self.games[ctx.channel.id]["players"].add(ctx.author.id)
         self.games[ctx.channel.id]["hands"][ctx.author.id] = []
@@ -71,9 +77,18 @@ class sabacc(commands.Cog):
       if len(self.games[ctx.channel.id]["players"]) <= 1:
         await ctx.send("There are not enough players to start a game! Get more people to join and then we can get started.",delete_after=5)
         return
+      if self.games[ctx.channel.id]["status"] != "Preparing":
+        await ctx.send("The game is not able to be started right now. If that means that the game is already running, perhaps go play.",delete_after=5)
+      self.games[ctx.channel.id]["status"] = "Building"
     except:
-      await ctx.send("Could not find stored game host to verify game.",delete_after=5)
+      await ctx.send("Could not verify stored game data.",delete_after=5)
 
+  @commands.command(name="action",help="Take an action on your turn in a game.")
+  async def game_action(self,ctx,action):
+    trn = self.games[ctx.channel.id]["turn"]
+    if ctx.author.id != self.games[ctx.channel.id]["players"][trn]:
+      await ctx.send("It's not your turn!",delete_after=5)
+      return
 
 class Card():
   def __init__(self,name,value):
