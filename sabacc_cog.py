@@ -31,7 +31,7 @@ class sabacc(commands.Cog):
       pass
     self.games[ctx.channel.id] = {}
     self.games[ctx.channel.id]["players"] = []
-    self.games[ctx.channel.id]["players"].add(ctx.author.id)
+    self.games[ctx.channel.id]["players"].append(ctx.author.id)
     self.games[ctx.channel.id]["host"] = ctx.author.id
     self.games[ctx.channel.id]["status"] = "Preparing"
     self.games[ctx.channel.id]["hands"] = {}
@@ -57,7 +57,7 @@ class sabacc(commands.Cog):
         if ctx.author.id in self.games[ctx.channel.id]["players"]:
           await ctx.send("You have already joined this game.",delete_after=5)
           return
-        self.games[ctx.channel.id]["players"].add(ctx.author.id)
+        self.games[ctx.channel.id]["players"].append(ctx.author.id)
         self.games[ctx.channel.id]["hands"][ctx.author.id] = []
         await ctx.send("You were successfully added to the game!",delete_after=5)
         msg = await ctx.channel.fetch_message(self.games[ctx.channel.id]["msg"])
@@ -81,7 +81,7 @@ class sabacc(commands.Cog):
       self.games[ctx.channel.id]["status"] = "Building"
       for p in self.games[ctx.channel.id]["players"]:
         for x in range(2):
-          self.games[ctx.channel.id]["hands"][p].add(self.games[ctx.channel.id]["deck"].draw())
+          self.games[ctx.channel.id]["hands"][p].append(self.games[ctx.channel.id]["deck"].draw())
         c1 = self.games[ctx.channel.id]["hands"][p][0]
         c2 = self.games[ctx.channel.id]["hands"][p][1]
         sum = c1.value + c2.value
@@ -126,12 +126,12 @@ class Deck():
     suits = ["Circles","Squares","Triangles"]
     for suit in suits:
       for x in range(1,10):
-        self.contents.add(Card(str(x) + " of " + suit, x))
+        self.contents.append(Card(str(x) + " of " + suit, x))
       for x in range(-10,-1):
-        self.contents.add(Card(str(x) + " of " + suit, x))
+        self.contents.append(Card(str(x) + " of " + suit, x))
 
-    self.contents.add(Card("Zero",0))
-    self.contents.add(Card("Zero",0))
+    self.contents.append(Card("Zero",0))
+    self.contents.append(Card("Zero",0))
 
   def draw(self):
     r_index = random.randint(0,len(self.contents))
