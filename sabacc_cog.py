@@ -93,8 +93,9 @@ class sabacc(commands.Cog):
         await ch.send("Your starting hand is:\n1. **{0.name}**\n2.**{1.name}**\nThe sum of your hand is {2}.".format(c1,c2,sum))
       first_player = bot.fetch_user(self.games[ctx.channel.id]["players"][0])
       await ctx.send("The game has begun! All players' starting hands have been sent to them, and it is now " + first_player.mention +"'s turn! You may take a turn using the `action` command!")
-    except:
+    except e:
       await ctx.send("Could not verify stored game data.",delete_after=5)
+      raise e
 
   @commands.command(name="action",help="Take an action on your turn in a game.")
   async def game_action(self,ctx,action):
