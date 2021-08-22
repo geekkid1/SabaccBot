@@ -90,7 +90,7 @@ class sabacc(commands.Cog):
           ch = await user.create_dm()
         else:
           ch = user.dm_channel
-        await ch.send("Your starting hand is {0.name} and {1.name}. The sum of your hand is {2}.".format(c1,c2,sum))
+        await ch.send("Your starting hand is:\n1. **{0.name}**\n2.**{1.name}**\nThe sum of your hand is {2}.".format(c1,c2,sum))
       first_player = bot.fetch_user(self.games[ctx.channel.id]["players"][0])
       await ctx.send("The game has begun! All players' starting hands have been sent to them, and it is now " + first_player.mention +"'s turn! You may take a turn using the `action` command!")
     except:
